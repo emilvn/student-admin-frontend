@@ -10,7 +10,7 @@ class CourseApi extends Api<Course> {
 	public getTeacher: (id: number) => Promise<Teacher> = async (id: number) => {
 		const response = await fetch(Api.endpoint + this.path + "/" + id + "/teacher");
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		if(response.status === 204){
 			return null;
@@ -21,7 +21,7 @@ class CourseApi extends Api<Course> {
 	public getStudents: (id: number) => Promise<Student[]> = async (id: number) => {
 		const response = await fetch(Api.endpoint + this.path + "/" + id + "/students");
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		if(response.status === 204){
 			return [];
@@ -34,7 +34,7 @@ class CourseApi extends Api<Course> {
 			method: "PUT"
 		});
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		return await response.json();
 	};
@@ -48,7 +48,7 @@ class CourseApi extends Api<Course> {
 			},
 		});
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		return await response.json();
 	};
@@ -58,7 +58,7 @@ class CourseApi extends Api<Course> {
 			method: "DELETE"
 		});
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		return await response.json();
 	}
@@ -68,7 +68,7 @@ class CourseApi extends Api<Course> {
 			method: "DELETE"
 		});
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		return await response.json();
 	}

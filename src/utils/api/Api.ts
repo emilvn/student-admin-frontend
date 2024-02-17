@@ -8,7 +8,7 @@ class Api<T>{
 	public get: () => Promise<T[]> = async () => {
 		const response = await fetch(Api.endpoint + this.path);
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		if(response.status === 204){
 			return [];
@@ -18,7 +18,7 @@ class Api<T>{
 	public getById: (id: number) => Promise<T> = async (id: number) => {
 		const response = await fetch(Api.endpoint + this.path + "/" + id);
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		return await response.json();
 	};
@@ -31,7 +31,7 @@ class Api<T>{
 			},
 		});
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		return await response.json();
 
@@ -45,7 +45,7 @@ class Api<T>{
 			},
 		});
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		return await response.json();
 
@@ -59,7 +59,7 @@ class Api<T>{
 			},
 		});
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		return await response.json();
 	};
@@ -68,7 +68,7 @@ class Api<T>{
 			method: "DELETE",
 		});
 		if(!response.ok){
-			throw new Error(response.statusText);
+			return null;
 		}
 		return await response.json();
 	};
