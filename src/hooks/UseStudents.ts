@@ -36,6 +36,7 @@ function useStudents() {
 				toast.error("Student not found");
 				return null;
 			}
+			return student;
 		} catch (e) {
 			if (e instanceof Error) {
 				console.error(e.message);
