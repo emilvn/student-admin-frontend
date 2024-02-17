@@ -3,17 +3,29 @@ import type {Course, Student, Teacher} from "../../types/entities.ts";
 
 class CourseApi extends Api<Course> {
 
-	constructor() {
-		super("/courses");
+	constructor(path : string) {
+		super(path);
 	}
 
 	public getTeacher: (id: number) => Promise<Teacher> = async (id: number) => {
 		const response = await fetch(Api.endpoint + this.path + "/" + id + "/teacher");
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
+		if(response.status === 204){
+			return null;
+		}
 		return await response.json();
 	};
 
 	public getStudents: (id: number) => Promise<Student[]> = async (id: number) => {
 		const response = await fetch(Api.endpoint + this.path + "/" + id + "/students");
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
+		if(response.status === 204){
+			return [];
+		}
 		return await response.json();
 	};
 
@@ -21,6 +33,9 @@ class CourseApi extends Api<Course> {
 		const response = await fetch(Api.endpoint + this.path + "/" + id + "/students/" + studentId, {
 			method: "PUT"
 		});
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
 		return await response.json();
 	};
 
@@ -32,6 +47,9 @@ class CourseApi extends Api<Course> {
 				"Content-Type": "application/json",
 			},
 		});
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
 		return await response.json();
 	};
 
@@ -39,6 +57,9 @@ class CourseApi extends Api<Course> {
 		const response = await fetch(Api.endpoint + this.path + "/" + id + "/students/" + studentId, {
 			method: "DELETE"
 		});
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
 		return await response.json();
 	}
 
@@ -46,7 +67,12 @@ class CourseApi extends Api<Course> {
 		const response = await fetch(Api.endpoint + this.path + "/" + id + "/teacher", {
 			method: "DELETE"
 		});
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
 		return await response.json();
 	}
 
 }
+
+export default CourseApi;

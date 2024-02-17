@@ -7,10 +7,19 @@ class Api<T>{
 	}
 	public get: () => Promise<T[]> = async () => {
 		const response = await fetch(Api.endpoint + this.path);
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
+		if(response.status === 204){
+			return [];
+		}
 		return  await response.json();
 	};
 	public getById: (id: number) => Promise<T> = async (id: number) => {
 		const response = await fetch(Api.endpoint + this.path + "/" + id);
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
 		return await response.json();
 	};
 	public post: (data: T) => Promise<T> = async (data: T) => {
@@ -21,6 +30,9 @@ class Api<T>{
 				"Content-Type": "application/json",
 			},
 		});
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
 		return await response.json();
 
 	};
@@ -32,6 +44,9 @@ class Api<T>{
 				"Content-Type": "application/json",
 			},
 		});
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
 		return await response.json();
 
 	};
@@ -43,12 +58,18 @@ class Api<T>{
 				"Content-Type": "application/json",
 			},
 		});
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
 		return await response.json();
 	};
 	public delete: (id: number) => Promise<T> = async (id: number) => {
 		const response = await fetch(Api.endpoint + this.path + "/" + id, {
 			method: "DELETE",
 		});
+		if(!response.ok){
+			throw new Error(response.statusText);
+		}
 		return await response.json();
 	};
 
