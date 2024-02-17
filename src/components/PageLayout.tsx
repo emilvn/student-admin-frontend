@@ -1,40 +1,44 @@
-import {PropsWithChildren} from "react";
-import House from "../helpers/House.ts";
+import {PropsWithChildren, useState} from "react";
+import House, {houseIcons} from "../helpers/House.ts";
 
 interface IPageLayoutProps extends PropsWithChildren {
 	title?: string;
-	house?: House;
 }
 
-function PageLayout({children, title = "Hogwarts admin", house = House.HOGWARTS}: IPageLayoutProps) {
-	return (<>
-			<Header house={house}>
-				{title}
-			</Header>
-			<main className="flex justify-center items-center min-h-screen p-4 text-green-600">
-				{children}
-			</main>
-			<Footer/>
-		</>
-	);
-}
+function PageLayout({children, title = "Hogwarts Admin"}: IPageLayoutProps) {
+	const [house, setHouse] = useState<House>(House.GRYFFINDOR);
 
-interface IHeaderProps extends PropsWithChildren {
-	house: House;
-}
+	const cycleHouse = () => {
+		const houses = Object.values(House);
+		const currentIndex = houses.indexOf(house);
+		const nextIndex = (currentIndex + 1) % houses.length;
+		setHouse(houses[nextIndex]);
+	}
 
-function Header({children, house}: IHeaderProps) {
 	const colors: Record<House, string> = {
 		[House.GRYFFINDOR]: "bg-red-950 text-yellow-600",
 		[House.HUFFLEPUFF]: "bg-yellow-600 text-black",
 		[House.RAVENCLAW]: "bg-blue-950 text-slate-300",
 		[House.SLYTHERIN]: "bg-green-950 text-slate-300",
-		[House.HOGWARTS]: "bg-gray-800 text-white"
 	};
-	return (
-		<div className={`text-4xl p-4 font-semibold ${colors[house]}`}>
-			{children}
-		</div>
+	const waterMarks: Record<House, string> = {
+		[House.GRYFFINDOR]: "bg-gryffindor",
+		[House.HUFFLEPUFF]: "bg-hufflepuff",
+		[House.RAVENCLAW]: "bg-ravenclaw",
+		[House.SLYTHERIN]: "bg-slytherin",
+	};
+	return (<>
+			<div className={`${colors[house]} text-4xl p-4 font-semibold flex gap-2 select-none`}>
+				<img src={houseIcons[house]} alt={house} className="w-12" onClick={cycleHouse}/>
+				{title}
+			</div>
+			<main className={`flex justify-center items-center min-h-screen mt-4 text-green-600`}>
+				{children}
+
+				<div className={`${waterMarks[house]} absolute opacity-5 w-full h-full min-h-screen bg-no-repeat bg-contain bg-center`}></div>
+			</main>
+			<Footer/>
+		</>
 	);
 }
 
