@@ -1,7 +1,11 @@
+import PageLayout from "../components/PageLayout.tsx";
+
 function Home() {
 	return (
 		<div>
-			<h1>Home</h1>
+			<PageLayout>
+				<h1>Home</h1>
+			</PageLayout>
 		</div>
 	);
 }
