@@ -1,5 +1,6 @@
 import {PropsWithChildren, useState} from "react";
 import House, {houseIcons} from "../helpers/House.ts";
+import {Toaster} from "react-hot-toast";
 
 interface IPageLayoutProps extends PropsWithChildren {
 	title?: string;
@@ -35,9 +36,11 @@ function PageLayout({children, title = "Hogwarts Admin"}: IPageLayoutProps) {
 			<main className={`flex justify-center items-center min-h-screen mt-4 text-green-600`}>
 				{children}
 
-				<div className={`${waterMarks[house]} absolute opacity-5 w-full h-full min-h-screen bg-no-repeat bg-contain bg-center pointer-events-none`}></div>
+				<div
+					className={`${waterMarks[house]} absolute opacity-5 w-full h-full min-h-screen bg-no-repeat bg-contain bg-center pointer-events-none`}></div>
 			</main>
 			<Footer/>
+			<Toaster position={"bottom-center"}/>
 		</>
 	);
 }

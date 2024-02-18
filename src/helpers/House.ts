@@ -1,4 +1,4 @@
-enum House{
+enum House {
 	GRYFFINDOR = "gryffindor",
 	HUFFLEPUFF = "hufflepuff",
 	RAVENCLAW = "ravenclaw",
@@ -13,4 +13,4 @@ const houseIcons = {
 }
 
 export default House;
-export { houseIcons };
+export {houseIcons};

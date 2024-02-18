@@ -1,17 +1,20 @@
 import {useEffect, useState} from "react";
-import {Student, Teacher} from "../types/entities.ts";
+import {HogwartsPerson} from "../types/entities.ts";
 import Api from "../utils/api/Api.ts";
 import toast from "react-hot-toast";
+import {capitalize} from "../helpers/formatting.ts";
 
-function usePeople<T extends Student | Teacher>(personType:"student" | "teacher") {
+function usePeople<T extends HogwartsPerson>(personType: "student" | "teacher") {
 	const [people, setPeople] = useState<T[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const api = new Api<T>("/" + personType + "s");
+
+	const path = "/" + personType + "s";
+	const api = new Api<T>(path);
 
 	const load = () => {
 		setIsLoading(true);
 		api.get().then(s => {
-			if(s !== null) setPeople(s);
+			if (s !== null) setPeople(s);
 		})
 			.then(() => setIsLoading(false))
 			.catch((e: unknown) => {
@@ -27,13 +30,13 @@ function usePeople<T extends Student | Teacher>(personType:"student" | "teacher"
 
 	const getById = async (id: number) => {
 		try {
-			let person = people.find((s) => s.id === id);
+			let person: T | null | undefined = people.find((s) => s.id === id);
 			if (person) {
 				return person;
 			}
 			person = await api.getById(id);
-			if(!person){
-				toast.error(personType + " not found");
+			if (!person) {
+				toast.error(capitalize(personType) + " not found");
 				return null;
 			}
 			return person;
@@ -46,33 +49,33 @@ function usePeople<T extends Student | Teacher>(personType:"student" | "teacher"
 		}
 	};
 
-	const create = async (person: T) => {
+	const create = async (person: Partial<T>) => {
 		try {
 			const newPerson = await api.post(person);
-			if(!newPerson){
+			if (!newPerson) {
 				toast.error("Failed to create " + personType);
 				return;
 			}
 			setPeople([...people, newPerson]);
-			toast.success(personType + " created");
-		} catch (e : unknown) {
+			toast.success(capitalize(personType) + " created");
+		} catch (e: unknown) {
 			toast.error("Unexpected error. Failed to create " + personType);
 			console.error(e);
 		}
 	};
 
-	const update = async (person: T, id: number) => {
+	const update = async (person: Partial<T>, id: number) => {
 		try {
 			const updatedStudent = await api.patch(id, person);
-			if(!updatedStudent){
+			if (!updatedStudent) {
 				toast.error("Failed to update " + personType);
 				return;
 			}
 			const index = people.findIndex((s) => s.id === updatedStudent.id);
 			people[index] = updatedStudent;
 			setPeople([...people]);
-			toast.success(personType + " updated");
-		} catch (e : unknown) {
+			toast.success(capitalize(personType) + " updated");
+		} catch (e: unknown) {
 			toast.error("Unexpected error. Failed to update " + personType);
 			console.error(e);
 		}
@@ -81,15 +84,15 @@ function usePeople<T extends Student | Teacher>(personType:"student" | "teacher"
 	const destroy = async (id: number) => {
 		try {
 			const deletedStudent = await api.delete(id);
-			if(!deletedStudent){
+			if (!deletedStudent) {
 				toast.error("Failed to delete " + personType);
 				return;
 			}
 			const index = people.findIndex((s) => s.id === id);
 			people.splice(index, 1);
 			setPeople([...people]);
-			toast.success(personType + " deleted");
-		} catch (e : unknown) {
+			toast.success(capitalize(personType) + " deleted");
+		} catch (e: unknown) {
 			toast.error("Unexpected error. Failed to delete " + personType);
 			console.error(e);
 		}
