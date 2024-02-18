@@ -2,11 +2,11 @@ import Home from "./containers/Home.tsx";
 
 function App() {
 
-	return (
-		<>
-			<Home/>
-		</>
-	)
+    return (
+        <>
+            <Home />
+        </>
+    );
 }
 
 export default App;
