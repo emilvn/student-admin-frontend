@@ -54,7 +54,7 @@ function usePeople<T extends HogwartsPerson>(personType: "student" | "teacher") 
 			const newPerson = await api.post(person);
 			if (!newPerson) {
 				toast.error("Failed to create " + personType);
-				return;
+				return null;
 			}
 			setPeople([...people, newPerson]);
 			toast.success(capitalize(personType) + " created");
@@ -69,7 +69,7 @@ function usePeople<T extends HogwartsPerson>(personType: "student" | "teacher") 
 			const updatedStudent = await api.patch(id, person);
 			if (!updatedStudent) {
 				toast.error("Failed to update " + personType);
-				return;
+				return null;
 			}
 			const index = people.findIndex((s) => s.id === updatedStudent.id);
 			people[index] = updatedStudent;
@@ -86,7 +86,7 @@ function usePeople<T extends HogwartsPerson>(personType: "student" | "teacher") 
 			const deletedStudent = await api.delete(id);
 			if (!deletedStudent) {
 				toast.error("Failed to delete " + personType);
-				return;
+				return null;
 			}
 			const index = people.findIndex((s) => s.id === id);
 			people.splice(index, 1);

@@ -1,11 +1,11 @@
 interface HogwartsPerson {
 	id: number;
-	firstName: string;
-	middleName: string;
-	lastName: string;
+	firstName: string | null;
+	middleName: string | null;
+	lastName: string | null;
 	age: number;
-	dateOfBirth: string;
-	house: HogwartsHouse;
+	dateOfBirth: string | null;
+	house: HogwartsHouse | null;
 }
 
 interface Student extends HogwartsPerson {
@@ -18,14 +18,14 @@ interface Student extends HogwartsPerson {
 interface Teacher extends HogwartsPerson {
 	headOfHouse: boolean;
 	employment: EmpType;
-	employmentStart: string,
-	employmentEnd: string
+	employmentStart: string | null;
+	employmentEnd: string | null;
 }
 
 interface Course {
 	id: number;
-	subject: string;
-	teacher: Teacher;
+	subject: string | null;
+	teacher: Teacher | null;
 	students: Student[];
 	schoolYear: number;
 	current: boolean;
@@ -33,8 +33,8 @@ interface Course {
 
 interface HogwartsHouse {
 	id: number;
-	name: string;
-	founder: string;
+	name: string | null;
+	founder: string | null;
 	colors: string[];
 }
 
