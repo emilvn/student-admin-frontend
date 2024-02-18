@@ -23,10 +23,11 @@ function PageLayout({ children, title = "Hogwarts Student Administration" }: IPa
         [House.SLYTHERIN]: "bg-green-950 text-slate-300"
     };
     return (<>
-            <div className={`${colors[house]} text-4xl p-4 font-thin font-serif flex gap-2 select-none fixed w-full top-0`}>
+            <div className={`${colors[house]} text-4xl h-20 p-4 font-thin font-serif flex gap-2 select-none fixed w-full top-0`}>
                 <img src={houseIcons[house]} alt={house} className="w-12" onClick={cycleHouse} />
                 {title}
             </div>
+            <Nav />
             <main className={`flex justify-center items-center min-h-screen mt-12 text-green-600 overflow-clip`}>
                 {children}
 
@@ -38,6 +39,16 @@ function PageLayout({ children, title = "Hogwarts Student Administration" }: IPa
             <Footer house={house} />
             <Toaster position={"bottom-center"} />
         </>
+    );
+}
+
+function Nav() {
+    return (
+        <nav className="flex flex-row p-2 bg-gray-500 text-slate-300 text-xl justify-evenly fixed top-20 w-full">
+            <a href="#students" className="hover:text-slate-200">Students</a>
+            <a href="#teachers" className="hover:text-slate-200">Teachers</a>
+            <a href="#courses" className="hover:text-slate-200">Courses</a>
+        </nav>
     );
 }
 
