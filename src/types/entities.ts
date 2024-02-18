@@ -1,8 +1,6 @@
 interface HogwartsPerson {
     id: number;
-    firstName: string | null;
-    middleName: string | null;
-    lastName: string | null;
+    fullName: string | null;
     age: number;
     dateOfBirth: string | null;
     house: HogwartsHouse | null;

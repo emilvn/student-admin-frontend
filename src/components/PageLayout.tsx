@@ -22,22 +22,18 @@ function PageLayout({ children, title = "Hogwarts Admin" }: IPageLayoutProps) {
         [House.RAVENCLAW]: "bg-blue-950 text-slate-300",
         [House.SLYTHERIN]: "bg-green-950 text-slate-300"
     };
-    const waterMarks: Record<House, string> = {
-        [House.GRYFFINDOR]: "bg-gryffindor",
-        [House.HUFFLEPUFF]: "bg-hufflepuff",
-        [House.RAVENCLAW]: "bg-ravenclaw",
-        [House.SLYTHERIN]: "bg-slytherin"
-    };
     return (<>
             <div className={`${colors[house]} text-4xl p-4 font-semibold flex gap-2 select-none`}>
                 <img src={houseIcons[house]} alt={house} className="w-12" onClick={cycleHouse} />
                 {title}
             </div>
-            <main className={`flex justify-center items-center min-h-screen mt-4 text-green-600`}>
+            <main className={`flex justify-center items-center min-h-screen mt-4 text-green-600 overflow-clip`}>
                 {children}
 
                 <div
-                    className={`${waterMarks[house]} absolute opacity-5 w-full h-full min-h-screen bg-no-repeat bg-contain bg-center pointer-events-none`}></div>
+                    className="fixed opacity-5 min-h-screen pointer-events-none flex justify-center items-center">
+                    <img src={houseIcons[house]} alt={house} className=""/>
+                </div>
             </main>
             <Footer />
             <Toaster position={"bottom-center"} />
