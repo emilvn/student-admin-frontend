@@ -1,4 +1,4 @@
-// import endpoint from .env file
+
 class Api<T> {
     protected static endpoint: string = import.meta.env.VITE_API_URL as string;
     protected path: string;
