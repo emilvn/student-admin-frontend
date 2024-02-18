@@ -23,11 +23,11 @@ function PageLayout({ children, title = "Hogwarts Admin" }: IPageLayoutProps) {
         [House.SLYTHERIN]: "bg-green-950 text-slate-300"
     };
     return (<>
-            <div className={`${colors[house]} text-4xl p-4 font-semibold flex gap-2 select-none`}>
+            <div className={`${colors[house]} text-4xl p-4 font-semibold flex gap-2 select-none fixed w-full top-0`}>
                 <img src={houseIcons[house]} alt={house} className="w-12" onClick={cycleHouse} />
                 {title}
             </div>
-            <main className={`flex justify-center items-center min-h-screen mt-4 text-green-600 overflow-clip`}>
+            <main className={`flex justify-center items-center min-h-screen mt-12 text-green-600 overflow-clip`}>
                 {children}
 
                 <div
